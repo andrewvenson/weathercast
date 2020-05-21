@@ -1,13 +1,20 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/Header";
+import Search from "./components/Search";
 
 function App() {
   const gridContainer = {
     display: "grid",
-    gridTemplateColumns: "40% 60%",
+    gridTemplateColumns: "30% 70%",
     height: "90vh",
   };
+
+  const weatherGridContainer = {
+    display: "grid",
+    gridTemplateRows: "50% 50%",
+  };
+
   return (
     <>
       <Header />
@@ -18,9 +25,16 @@ function App() {
             backgroundColor: "whitesmoke",
           }}
         >
-          <h1>Weathercast</h1>
+          <Search />
         </div>
-        <div style={{ border: "1px solid lightgray" }}></div>
+        <div style={weatherGridContainer}>
+          <div style={{ border: "1px solid lightgray" }}>
+            <h3>City</h3>
+          </div>
+          <div style={{ border: "1px solid lightgray" }}>
+            <h3>5-Day Forecast</h3>
+          </div>
+        </div>
       </div>
     </>
   );
