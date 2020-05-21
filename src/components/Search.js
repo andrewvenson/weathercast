@@ -9,6 +9,7 @@ const Search = (props) => {
           value={props.cityinput.city}
           placeholder="Search for a City..."
           onChange={(e) => {
+            // set value of input to what's in state
             props.setcityinput({ ...props.cityinput, city: e.target.value });
           }}
           onKeyUp={(e) => {
@@ -31,6 +32,7 @@ const Search = (props) => {
                       return response.json();
                     })
                     .then((onecalldata) => {
+                      // create weather object from open weather data
                       const weatherObj = {
                         city: city,
                         temp: `${Math.round(
@@ -40,8 +42,21 @@ const Search = (props) => {
                         windspeed: `${weatherCall.wind.speed} MPH`,
                         uvindex: onecalldata.current.uvi,
                       };
+                      // concat city history state with new weather obj
                       const cityarray = props.cityhistory.concat([weatherObj]);
+                      // set city history to new concatenated city history
                       props.setcityhistory(cityarray);
+                      // set selected city state
+                      props.setselectedcity({
+                        ...props.selectedcity,
+                        city: city,
+                        temp: `${Math.round(
+                          (weatherCall.main.temp - 273.15) * 1.8 + 32
+                        )} °F`,
+                        humidity: `${weatherCall.main.humidity}%`,
+                        windspeed: `${weatherCall.wind.speed} MPH`,
+                        uvindex: onecalldata.current.uvi,
+                      });
                       // clear input
                       props.setcityinput({ ...props.cityinput, city: "" });
                     })
@@ -88,12 +103,17 @@ const Search = (props) => {
                   height: "45px",
                   cursor: "pointer",
                 }}
+                className="historyDiv"
                 onClick={() => {
-                  console.log(city["city"]);
-                  console.log(city["temp"]);
-                  console.log(city["humidity"]);
-                  console.log(city["windspeed"]);
-                  console.log(city["uvindex"]);
+                  // set selected city state
+                  props.setselectedcity({
+                    ...props.selectedcity,
+                    city: city.city,
+                    temp: city.temp,
+                    humidity: city.humidity,
+                    windspeed: city.windspeed,
+                    uvindex: city.uvindex,
+                  });
                 }}
               >
                 <p>{city.city}</p>
