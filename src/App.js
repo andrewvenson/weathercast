@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Search from "./components/Search";
 
 function App() {
+  const [cityhistory, setCityHistory] = useState([]);
+  const [cityinput, setCityInput] = useState({ city: "" });
+
   const gridContainer = {
     display: "grid",
     gridTemplateColumns: "30% 70%",
@@ -25,7 +28,12 @@ function App() {
             backgroundColor: "whitesmoke",
           }}
         >
-          <Search />
+          <Search
+            cityhistory={cityhistory}
+            setcityhistory={setCityHistory}
+            cityinput={cityinput}
+            setcityinput={setCityInput}
+          />
         </div>
         <div style={weatherGridContainer}>
           <div style={{ border: "1px solid lightgray" }}>
