@@ -1,0 +1,9 @@
+.weatherDataContainer div:hover {
+  background-color: whitesmoke !important;
+  border-radius: 10px !important;
+  padding: 5px !important;
+}
+
+.historyDiv:hover {
+  background-color: lightgray !important;
+}

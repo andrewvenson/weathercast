@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Search from "./components/Search";
+import WeatherDataContainer from "./components/WeatherDataContainer";
 
 function App() {
   const [cityhistory, setCityHistory] = useState([]);
   const [cityinput, setCityInput] = useState({ city: "" });
+  const [selectedcity, setSelectedCity] = useState({
+    city: "",
+    temp: "",
+    humidity: "",
+    windspeed: "",
+    uvindex: "",
+  });
 
   const gridContainer = {
     display: "grid",
@@ -26,6 +34,7 @@ function App() {
           style={{
             border: "1px solid lightgray",
             backgroundColor: "whitesmoke",
+            borderBottomRightRadius: "5px",
           }}
         >
           <Search
@@ -33,14 +42,26 @@ function App() {
             setcityhistory={setCityHistory}
             cityinput={cityinput}
             setcityinput={setCityInput}
+            setselectedcity={setSelectedCity}
+            selectedcity={selectedcity}
           />
         </div>
         <div style={weatherGridContainer}>
-          <div style={{ border: "1px solid lightgray" }}>
-            <h3>City</h3>
+          <div
+            style={{
+              padding: "10px 10px 10px 10px",
+              heigth: "100%",
+            }}
+          >
+            <WeatherDataContainer selectedcity={selectedcity} />
           </div>
-          <div style={{ border: "1px solid lightgray" }}>
-            <h3>5-Day Forecast</h3>
+          <div
+            style={{
+              padding: "10px 10px 10px 10px",
+              heigth: "100%",
+            }}
+          >
+            <h3>5-Day Forecast:</h3>
           </div>
         </div>
       </div>
