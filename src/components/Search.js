@@ -49,8 +49,10 @@ const Search = (props) => {
                         if (iterDate in castObj) {
                           const dateArr = castObj[iterDate].concat({
                             [iterTime]: [
-                              data.main.temp,
-                              data.main.humidity,
+                              `${Math.round(
+                                (data.main.temp - 273.15) * 1.8 + 32
+                              )} °F`,
+                              `${data.main.humidity}%`,
                               data.weather[0].description,
                             ],
                           });
@@ -59,8 +61,10 @@ const Search = (props) => {
                           castObj[iterDate] = [
                             {
                               [iterTime]: [
-                                data.main.temp,
-                                data.main.humidity,
+                                `${Math.round(
+                                  (data.main.temp - 273.15) * 1.8 + 32
+                                )} °F`,
+                                `${data.main.humidity}%`,
                                 data.weather[0].description,
                               ],
                             },
@@ -206,8 +210,10 @@ const Search = (props) => {
                             if (iterDate in castObj) {
                               const dateArr = castObj[iterDate].concat({
                                 [iterTime]: [
-                                  data.main.temp,
-                                  data.main.humidity,
+                                  `${Math.round(
+                                    (data.main.temp - 273.15) * 1.8 + 32
+                                  )} °F`,
+                                  `${data.main.humidity}%`,
                                   data.weather[0].description,
                                 ],
                               });
@@ -216,8 +222,10 @@ const Search = (props) => {
                               castObj[iterDate] = [
                                 {
                                   [iterTime]: [
-                                    data.main.temp,
-                                    data.main.humidity,
+                                    `${Math.round(
+                                      (data.main.temp - 273.15) * 1.8 + 32
+                                    )} °F`,
+                                    `${data.main.humidity}%`,
                                     data.weather[0].description,
                                   ],
                                 },
