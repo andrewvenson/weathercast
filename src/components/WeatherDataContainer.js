@@ -20,11 +20,16 @@ const WeatherDataContainer = (props) => {
       <div>
         {props.selectedcity.city === "" ? (
           <h3>
-            ({month}/{day}/{year})
+            <span style={{ color: "lightgray" }}>
+              ({month}/{day}/{year})
+            </span>
           </h3>
         ) : (
           <h3>
-            {props.selectedcity.city} ({month}/{day}/{year})
+            {props.selectedcity.city}{" "}
+            <span style={{ color: "lightgray" }}>
+              ({month}/{day}/{year})
+            </span>
           </h3>
         )}
       </div>

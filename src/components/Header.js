@@ -4,9 +4,10 @@ const Header = () => {
   return (
     <div
       style={{
-        backgroundColor: "gray",
+        backgroundColor: "#058c42",
         display: "flex",
         justifyContent: "center",
+        color: "whitesmoke",
       }}
     >
       <h3>Weathercast</h3>

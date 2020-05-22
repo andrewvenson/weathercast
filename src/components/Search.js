@@ -53,7 +53,7 @@ const Search = (props) => {
                                 (data.main.temp - 273.15) * 1.8 + 32
                               )} °F`,
                               `${data.main.humidity}%`,
-                              data.weather[0].description,
+                              data.weather[0].main,
                             ],
                           });
                           castObj[iterDate] = dateArr;
@@ -65,7 +65,7 @@ const Search = (props) => {
                                   (data.main.temp - 273.15) * 1.8 + 32
                                 )} °F`,
                                 `${data.main.humidity}%`,
-                                data.weather[0].description,
+                                data.weather[0].main,
                               ],
                             },
                           ];
@@ -214,7 +214,7 @@ const Search = (props) => {
                                     (data.main.temp - 273.15) * 1.8 + 32
                                   )} °F`,
                                   `${data.main.humidity}%`,
-                                  data.weather[0].description,
+                                  data.weather[0].main,
                                 ],
                               });
                               castObj[iterDate] = dateArr;
@@ -226,7 +226,7 @@ const Search = (props) => {
                                       (data.main.temp - 273.15) * 1.8 + 32
                                     )} °F`,
                                     `${data.main.humidity}%`,
-                                    data.weather[0].description,
+                                    data.weather[0].main,
                                   ],
                                 },
                               ];
