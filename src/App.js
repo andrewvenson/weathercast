@@ -25,6 +25,7 @@ function App() {
   const [currenttime, setCurrentTime] = useState({
     time: "00:00:00",
     timeslot: "0",
+    ampm: "12:00AM",
   });
 
   const gridContainer = {
@@ -85,7 +86,7 @@ function App() {
             <h3>
               5-Day Forecast:{" "}
               {Object.keys(fivedaycast).length !== 0 && (
-                <span style={{ color: "lightgray" }}>12:00AM</span>
+                <span style={{ color: "lightgray" }}>{currenttime.ampm}</span>
               )}
             </h3>
             <button
@@ -96,6 +97,7 @@ function App() {
                   ...currenttime,
                   time: "00:00:00",
                   timeslot: 0,
+                  ampm: "12:00AM",
                 });
               }}
             >
@@ -109,6 +111,7 @@ function App() {
                   ...currenttime,
                   time: "03:00:00",
                   timeslot: 1,
+                  ampm: "3:00AM",
                 });
               }}
             >
@@ -122,6 +125,7 @@ function App() {
                   ...currenttime,
                   time: "06:00:00",
                   timeslot: 2,
+                  ampm: "6:00AM",
                 });
               }}
             >
@@ -135,6 +139,7 @@ function App() {
                   ...currenttime,
                   time: "09:00:00",
                   timeslot: 3,
+                  ampm: "9:00AM",
                 });
               }}
             >
@@ -148,6 +153,7 @@ function App() {
                   ...currenttime,
                   time: "12:00:00",
                   timeslot: 4,
+                  ampm: "12:00PM",
                 });
               }}
             >
@@ -161,6 +167,7 @@ function App() {
                   ...currenttime,
                   time: "15:00:00",
                   timeslot: 5,
+                  ampm: "3:00PM",
                 });
               }}
             >
@@ -172,8 +179,9 @@ function App() {
               onClick={() => {
                 setCurrentTime({
                   ...currenttime,
-                  time: "19:00:00",
+                  time: "18:00:00",
                   timeslot: 6,
+                  ampm: "6:00PM",
                 });
               }}
             >
@@ -187,6 +195,7 @@ function App() {
                   ...currenttime,
                   time: "21:00:00",
                   timeslot: 7,
+                  ampm: "9:00PM",
                 });
               }}
             >
@@ -195,28 +204,32 @@ function App() {
 
             <div style={{ display: "flex" }}>
               {Object.keys(fivedaycast).map((cast, index) => {
-                // console.log(fivedaycast[cast]);
-                return (
-                  <FiveDayForecast
-                    key={index}
-                    date={cast}
-                    description={
-                      fivedaycast[cast][currenttime.timeslot][
-                        currenttime.time
-                      ][2]
-                    }
-                    temp={
-                      fivedaycast[cast][currenttime.timeslot][
-                        currenttime.time
-                      ][0]
-                    }
-                    humidity={
-                      fivedaycast[cast][currenttime.timeslot][
-                        currenttime.time
-                      ][1]
-                    }
-                  />
-                );
+                // only return data if it
+                if (fivedaycast[cast][currenttime.timeslot] !== undefined) {
+                  return (
+                    <FiveDayForecast
+                      key={index}
+                      date={cast}
+                      description={
+                        fivedaycast[cast][currenttime.timeslot][
+                          currenttime.time
+                        ][2]
+                      }
+                      temp={
+                        fivedaycast[cast][currenttime.timeslot][
+                          currenttime.time
+                        ][0]
+                      }
+                      humidity={
+                        fivedaycast[cast][currenttime.timeslot][
+                          currenttime.time
+                        ][1]
+                      }
+                    />
+                  );
+                } else {
+                  return null;
+                }
               })}
             </div>
           </div>
