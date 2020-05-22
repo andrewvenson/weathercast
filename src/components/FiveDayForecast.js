@@ -7,18 +7,18 @@ import Snowy5 from "../svg/snowy-5.svg";
 import Thunder from "../svg/thunder.svg";
 
 const FiveDayForecast = (props) => {
-  const atmosphere = [
-    "Mist",
-    "Smoke",
-    "Haze",
-    "Dust",
-    "Fog",
-    "Sand",
-    "Dust",
-    "Ash",
-    "Squall",
-    "Tornado",
-  ];
+  //   const atmosphere = [
+  //     "Mist",
+  //     "Smoke",
+  //     "Haze",
+  //     "Dust",
+  //     "Fog",
+  //     "Sand",
+  //     "Dust",
+  //     "Ash",
+  //     "Squall",
+  //     "Tornado",
+  //   ];
   const snow = "Snow";
   const rain = "Rain";
   const drizzle = "Drizzle";
@@ -55,7 +55,6 @@ const FiveDayForecast = (props) => {
         }}
       >
         <h4>{props.date}</h4>
-        {/* {console.log(props.main, thunderStorm)} */}
         <img
           src={
             props.main === thunderStorm

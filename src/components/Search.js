@@ -103,6 +103,7 @@ const Search = (props) => {
                         humidity: `${weatherCall.main.humidity}%`,
                         windspeed: `${weatherCall.wind.speed} MPH`,
                         uvindex: onecalldata.current.uvi,
+                        main: weatherCall.weather[0].main,
                       };
                       // concat city history state with new weather obj
                       const cityarray = props.cityhistory.concat([weatherObj]);
@@ -118,6 +119,7 @@ const Search = (props) => {
                         humidity: `${weatherCall.main.humidity}%`,
                         windspeed: `${weatherCall.wind.speed} MPH`,
                         uvindex: onecalldata.current.uvi,
+                        main: weatherCall.weather[0].main,
                       });
                       // clear input
                       props.setcityinput({ ...props.cityinput, city: "" });
@@ -175,6 +177,7 @@ const Search = (props) => {
                     humidity: city.humidity,
                     windspeed: city.windspeed,
                     uvindex: city.uvindex,
+                    main: city.main,
                   });
 
                   // get five day forecast

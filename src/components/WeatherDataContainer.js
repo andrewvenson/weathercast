@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Cloudy from "../svg/cloudy.svg";
+import Day from "../svg/day.svg";
+import Rainy2 from "../svg/rainy-2.svg";
+import Rainy7 from "../svg/rainy-7.svg";
+import Snowy5 from "../svg/snowy-5.svg";
+import Thunder from "../svg/thunder.svg";
 
 const WeatherDataContainer = (props) => {
   const date = new Date();
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const year = date.getFullYear();
+
+  const [svgstate, setSvgState] = useState(null);
+
+  const snow = "Snow";
+  const rain = "Rain";
+  const drizzle = "Drizzle";
+  const thunderStorm = "Thunderstorm";
+  const clear = "Clear";
+  const clouds = "Cloudy";
+
+  useEffect(() => {
+    setSvgState(props.selectedcity.main);
+  });
+
+  const weatherDescriptions = {
+    Rain: Rainy7,
+    Drizzle: Rainy2,
+    Thunderstorm: Thunder,
+    Cloudy: Cloudy,
+    Snow: Snowy5,
+    Clear: Day,
+  };
+
   return (
     <div
       className="weatherDataContainer"
@@ -29,6 +58,25 @@ const WeatherDataContainer = (props) => {
             {props.selectedcity.city}{" "}
             <span style={{ color: "lightgray" }}>
               ({month}/{day}/{year})
+            </span>
+            <span>
+              <img
+                src={
+                  svgstate === thunderStorm
+                    ? weatherDescriptions.Thunderstorm
+                    : svgstate === drizzle
+                    ? weatherDescriptions.Drizzle
+                    : svgstate === clear
+                    ? weatherDescriptions.Clear
+                    : svgstate === rain
+                    ? weatherDescriptions.Rain
+                    : svgstate === snow
+                    ? weatherDescriptions.Snow
+                    : weatherDescriptions.Cloudy
+                }
+                alt="cloudy day"
+                style={{ width: "65px" }}
+              />
             </span>
           </h3>
         )}
