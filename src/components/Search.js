@@ -15,8 +15,70 @@ const Search = (props) => {
           onKeyUp={(e) => {
             var city = e.target.value;
 
-            let api = "6d9344c39a56808725e4fa26d9748658";
+            var api = "6d9344c39a56808725e4fa26d9748658";
             if (e.keyCode === 13) {
+              // Get 5 day forecast
+              fetch(
+                `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${api}`
+              )
+                .then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  const date = new Date();
+                  let month = date.getMonth() + 1;
+                  const day = date.getDate();
+                  const year = date.getFullYear();
+                  let fullDate;
+                  if (month.toString().length === 1) {
+                    month = `0${month}`;
+                  }
+                  fullDate = `${year}-${month}-${day}`;
+
+                  let castObj = {};
+                  if (data.list !== undefined) {
+                    data.list.forEach((data, index) => {
+                      // get date
+                      if (fullDate !== data.dt_txt.substring(0, 10)) {
+                        let iterDate = data.dt_txt.substring(0, 10);
+                        let iterTime = data.dt_txt.substring(
+                          11,
+                          data.dt_txt.length
+                        );
+
+                        if (iterDate in castObj) {
+                          const dateArr = castObj[iterDate].concat({
+                            [iterTime]: [
+                              `${Math.round(
+                                (data.main.temp - 273.15) * 1.8 + 32
+                              )} °F`,
+                              `${data.main.humidity}%`,
+                              data.weather[0].description,
+                            ],
+                          });
+                          castObj[iterDate] = dateArr;
+                        } else {
+                          castObj[iterDate] = [
+                            {
+                              [iterTime]: [
+                                `${Math.round(
+                                  (data.main.temp - 273.15) * 1.8 + 32
+                                )} °F`,
+                                `${data.main.humidity}%`,
+                                data.weather[0].description,
+                              ],
+                            },
+                          ];
+                        }
+                      }
+                    });
+
+                    // set 5 day forecast to state
+                    props.setfivedaycast(castObj);
+                  }
+                });
+
+              // get current weather forecast
               fetch(
                 `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api}`
               )
@@ -114,6 +176,68 @@ const Search = (props) => {
                     windspeed: city.windspeed,
                     uvindex: city.uvindex,
                   });
+
+                  // get five day forecast
+                  var api = "6d9344c39a56808725e4fa26d9748658";
+                  fetch(
+                    `https://api.openweathermap.org/data/2.5/forecast?q=${city.city}&appid=${api}`
+                  )
+                    .then((response) => {
+                      return response.json();
+                    })
+                    .then((data) => {
+                      const date = new Date();
+                      let month = date.getMonth() + 1;
+                      const day = date.getDate();
+                      const year = date.getFullYear();
+                      let fullDate;
+                      if (month.toString().length === 1) {
+                        month = `0${month}`;
+                      }
+                      fullDate = `${year}-${month}-${day}`;
+
+                      let castObj = {};
+                      if (data.list !== undefined) {
+                        data.list.forEach((data, index) => {
+                          // get date
+                          if (fullDate !== data.dt_txt.substring(0, 10)) {
+                            let iterDate = data.dt_txt.substring(0, 10);
+                            let iterTime = data.dt_txt.substring(
+                              11,
+                              data.dt_txt.length
+                            );
+
+                            if (iterDate in castObj) {
+                              const dateArr = castObj[iterDate].concat({
+                                [iterTime]: [
+                                  `${Math.round(
+                                    (data.main.temp - 273.15) * 1.8 + 32
+                                  )} °F`,
+                                  `${data.main.humidity}%`,
+                                  data.weather[0].description,
+                                ],
+                              });
+                              castObj[iterDate] = dateArr;
+                            } else {
+                              castObj[iterDate] = [
+                                {
+                                  [iterTime]: [
+                                    `${Math.round(
+                                      (data.main.temp - 273.15) * 1.8 + 32
+                                    )} °F`,
+                                    `${data.main.humidity}%`,
+                                    data.weather[0].description,
+                                  ],
+                                },
+                              ];
+                            }
+                          }
+                        });
+
+                        // set 5 day forecast to state
+                        props.setfivedaycast(castObj);
+                      }
+                    });
                 }}
               >
                 <p>{city.city}</p>
