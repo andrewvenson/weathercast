@@ -7,3 +7,13 @@
 .historyDiv:hover {
   background-color: lightgray !important;
 }
+
+.weatherIntevalButton:hover {
+  background-color: lightgray !important;
+}
+
+.castDiv:hover {
+  background-color: #058c42 !important;
+  box-shadow: 4px 8px 12px gray !important;
+  border: none !important;
+}
