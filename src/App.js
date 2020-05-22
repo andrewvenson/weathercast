@@ -204,13 +204,14 @@ function App() {
 
             <div style={{ display: "flex" }}>
               {Object.keys(fivedaycast).map((cast, index) => {
-                // only return data if it
+                // console.log(fivedaycast[cast]);
+                // only return data if it time is available
                 if (fivedaycast[cast][currenttime.timeslot] !== undefined) {
                   return (
                     <FiveDayForecast
                       key={index}
                       date={cast}
-                      description={
+                      main={
                         fivedaycast[cast][currenttime.timeslot][
                           currenttime.time
                         ][2]
