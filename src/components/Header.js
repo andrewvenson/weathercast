@@ -10,7 +10,7 @@ const Header = () => {
         color: "whitesmoke",
       }}
     >
-      <h3>Weathercast</h3>
+      <h3>Weatherrecast</h3>
     </div>
   );
 };
