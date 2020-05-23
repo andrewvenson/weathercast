@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import firebase from "./Firebase";
 import "./App.css";
 import Header from "./components/Header";
 import Search from "./components/Search";
@@ -6,6 +7,8 @@ import WeatherDataContainer from "./components/WeatherDataContainer";
 import FiveDayForecast from "./components/FiveDayForecast";
 
 function App() {
+  const db = firebase.firestore();
+
   // city history state
   const [cityhistory, setCityHistory] = useState([]);
   // state for current city input for clearing out input
@@ -20,6 +23,56 @@ function App() {
   });
   // state to hold five day forecast
   const [fivedaycast, setFiveDayCast] = useState({});
+
+  useEffect(() => {
+    let forecastRef = db.collection("forecast").doc("forecast");
+    let historyRef = db.collection("history").doc("history");
+    let selectedRef = db.collection("selected").doc("selected");
+
+    historyRef
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log("No such document!");
+        } else {
+          let historyArray = [];
+          for (let x in doc.data()) {
+            historyArray.push(doc.data()[x]);
+          }
+          setCityHistory(historyArray);
+        }
+      })
+      .catch((err) => {
+        console.log("Error getting document", err);
+      });
+
+    selectedRef
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log("No such document!");
+        } else {
+          setSelectedCity(doc.data());
+        }
+      })
+      .catch((err) => {
+        console.log("Error getting document", err);
+      });
+
+    forecastRef
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log("No such document!");
+        } else {
+          console.log("Forecast data:", doc.data());
+          setFiveDayCast(doc.data());
+        }
+      })
+      .catch((err) => {
+        console.log("Error getting document", err);
+      });
+  }, []);
 
   // state to hold current time selected
   const [currenttime, setCurrentTime] = useState({
@@ -238,6 +291,7 @@ function App() {
                     //   fivedaycast[cast][currenttime.timeslot]["03:00:00"]
                     // );
                     // figure out how to display only times available
+                    return null;
                   }
                 } else {
                   return null;

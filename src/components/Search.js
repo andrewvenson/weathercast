@@ -1,6 +1,13 @@
 import React from "react";
+import firebase from "../Firebase";
 
 const Search = (props) => {
+  const db = firebase.firestore();
+
+  let historyRef = db.collection("history").doc("history");
+  let forecastRef = db.collection("forecast").doc("forecast");
+  let selectedRef = db.collection("selected").doc("selected");
+
   return (
     <>
       <div style={{ padding: "5px 10px 0px 10px" }}>
@@ -74,6 +81,7 @@ const Search = (props) => {
                     });
 
                     // set 5 day forecast to state
+                    forecastRef.set(castObj);
                     props.setfivedaycast(castObj);
                   }
                 });
@@ -109,9 +117,21 @@ const Search = (props) => {
                       const cityarray = props.cityhistory.concat([weatherObj]);
                       // set city history to new concatenated city history
                       props.setcityhistory(cityarray);
+                      historyRef.set(Object.assign({}, cityarray));
                       // set selected city state
                       props.setselectedcity({
                         ...props.selectedcity,
+                        city: city,
+                        temp: `${Math.round(
+                          (weatherCall.main.temp - 273.15) * 1.8 + 32
+                        )} °F`,
+                        humidity: `${weatherCall.main.humidity}%`,
+                        windspeed: `${weatherCall.wind.speed} MPH`,
+                        uvindex: onecalldata.current.uvi,
+                        main: weatherCall.weather[0].main,
+                      });
+
+                      selectedRef.set({
                         city: city,
                         temp: `${Math.round(
                           (weatherCall.main.temp - 273.15) * 1.8 + 32
@@ -152,7 +172,6 @@ const Search = (props) => {
           }}
         >
           {props.cityhistory.map((city, index) => {
-            // console.log(city);
             return (
               <div
                 key={index}
@@ -172,6 +191,15 @@ const Search = (props) => {
                   // set selected city state
                   props.setselectedcity({
                     ...props.selectedcity,
+                    city: city.city,
+                    temp: city.temp,
+                    humidity: city.humidity,
+                    windspeed: city.windspeed,
+                    uvindex: city.uvindex,
+                    main: city.main,
+                  });
+
+                  selectedRef.set({
                     city: city.city,
                     temp: city.temp,
                     humidity: city.humidity,
@@ -239,6 +267,7 @@ const Search = (props) => {
 
                         // set 5 day forecast to state
                         props.setfivedaycast(castObj);
+                        forecastRef.set(castObj);
                       }
                     });
                 }}
