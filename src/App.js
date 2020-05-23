@@ -24,7 +24,7 @@ function App() {
   // state to hold current time selected
   const [currenttime, setCurrentTime] = useState({
     time: "00:00:00",
-    timeslot: "0",
+    timeslot: 0,
     ampm: "12:00AM",
   });
 
@@ -204,30 +204,41 @@ function App() {
 
             <div style={{ display: "flex" }}>
               {Object.keys(fivedaycast).map((cast, index) => {
-                // console.log(fivedaycast[cast]);
                 // only return data if it time is available
                 if (fivedaycast[cast][currenttime.timeslot] !== undefined) {
-                  return (
-                    <FiveDayForecast
-                      key={index}
-                      date={cast}
-                      main={
-                        fivedaycast[cast][currenttime.timeslot][
-                          currenttime.time
-                        ][2]
-                      }
-                      temp={
-                        fivedaycast[cast][currenttime.timeslot][
-                          currenttime.time
-                        ][0]
-                      }
-                      humidity={
-                        fivedaycast[cast][currenttime.timeslot][
-                          currenttime.time
-                        ][1]
-                      }
-                    />
-                  );
+                  if (
+                    fivedaycast[cast][currenttime.timeslot][
+                      currenttime.time
+                    ] !== undefined
+                  ) {
+                    return (
+                      <FiveDayForecast
+                        key={index}
+                        date={cast}
+                        main={
+                          fivedaycast[cast][currenttime.timeslot][
+                            currenttime.time
+                          ][2]
+                        }
+                        temp={
+                          fivedaycast[cast][currenttime.timeslot][
+                            currenttime.time
+                          ][0]
+                        }
+                        humidity={
+                          fivedaycast[cast][currenttime.timeslot][
+                            currenttime.time
+                          ][1]
+                        }
+                      />
+                    );
+                  } else {
+                    // console.log(
+                    //   cast,
+                    //   fivedaycast[cast][currenttime.timeslot]["03:00:00"]
+                    // );
+                    // figure out how to display only times available
+                  }
                 } else {
                   return null;
                 }

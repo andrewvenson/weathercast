@@ -19,7 +19,6 @@ const WeatherDataContainer = (props) => {
   const drizzle = "Drizzle";
   const thunderStorm = "Thunderstorm";
   const clear = "Clear";
-  const clouds = "Cloudy";
 
   useEffect(() => {
     setSvgState(props.selectedcity.main);
