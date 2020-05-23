@@ -33,6 +33,35 @@ const WeatherDataContainer = (props) => {
     Clear: Day,
   };
 
+  let color;
+  // uv index colors based off uv index scale | epa https://19january2017snapshot.epa.gov/sunsafety/uv-index-scale-1_.html
+  if (props.selectedcity.uvindex < 3) {
+    color = "green";
+  } else if (
+    props.selectedcity.uvindex >= 3 &&
+    props.selectedcity.uvindex < 6
+  ) {
+    color = "yellow";
+  } else if (
+    props.selectedcity.uvindex >= 6 &&
+    props.selectedcity.uvindex < 8
+  ) {
+    color = "orange";
+  } else if (
+    props.selectedcity.uvindex >= 8 &&
+    props.selectedcity.uvindex < 11
+  ) {
+    color = "red";
+  } else if (props.selectedcity.uvindex >= 11) {
+    color = "purple";
+  }
+
+  const uvindex = {
+    backgroundColor: color,
+    borderRadius: "3px",
+    padding: "3px",
+  };
+
   return (
     <div
       className="weatherDataContainer"
@@ -100,8 +129,12 @@ const WeatherDataContainer = (props) => {
       </div>
       <div>
         <h6>
-          {props.selectedcity.uvindex !== "" &&
-            `UV Index: ${props.selectedcity.uvindex}`}
+          {props.selectedcity.uvindex !== "" && (
+            <>
+              <span>UV Index: </span>
+              <span style={uvindex}>{props.selectedcity.uvindex}</span>
+            </>
+          )}
         </h6>
       </div>
     </div>
