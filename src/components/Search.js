@@ -110,14 +110,13 @@ const Search = (props) => {
                         )} °F`,
                         humidity: `${weatherCall.main.humidity}%`,
                         windspeed: `${weatherCall.wind.speed} MPH`,
-                        uvindex: onecalldata.current.uvi,
+                        uvindex:
+                          onecalldata.current.uvi === undefined
+                            ? "no data"
+                            : onecalldata.current.uvi,
                         main: weatherCall.weather[0].main,
                       };
-                      // concat city history state with new weather obj
-                      const cityarray = props.cityhistory.concat([weatherObj]);
-                      // set city history to new concatenated city history
-                      props.setcityhistory(cityarray);
-                      historyRef.set(Object.assign({}, cityarray));
+
                       // set selected city state
                       props.setselectedcity({
                         ...props.selectedcity,
@@ -127,9 +126,18 @@ const Search = (props) => {
                         )} °F`,
                         humidity: `${weatherCall.main.humidity}%`,
                         windspeed: `${weatherCall.wind.speed} MPH`,
-                        uvindex: onecalldata.current.uvi,
+                        uvindex:
+                          onecalldata.current.uvi === undefined
+                            ? "no data"
+                            : onecalldata.current.uvi,
                         main: weatherCall.weather[0].main,
                       });
+
+                      // concat city history state with new weather obj
+                      const cityarray = props.cityhistory.concat([weatherObj]);
+                      // set city history to new concatenated city history
+                      props.setcityhistory(cityarray);
+                      historyRef.set(Object.assign({}, cityarray));
 
                       selectedRef.set({
                         city: city,
@@ -138,7 +146,10 @@ const Search = (props) => {
                         )} °F`,
                         humidity: `${weatherCall.main.humidity}%`,
                         windspeed: `${weatherCall.wind.speed} MPH`,
-                        uvindex: onecalldata.current.uvi,
+                        uvindex:
+                          onecalldata.current.uvi === undefined
+                            ? "no data"
+                            : onecalldata.current.uvi,
                         main: weatherCall.weather[0].main,
                       });
                       // clear input
@@ -204,7 +215,8 @@ const Search = (props) => {
                     temp: city.temp,
                     humidity: city.humidity,
                     windspeed: city.windspeed,
-                    uvindex: city.uvindex,
+                    uvindex:
+                      city.uvindex === undefined ? "no data" : city.uvindex,
                     main: city.main,
                   });
 
