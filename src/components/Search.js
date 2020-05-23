@@ -247,6 +247,7 @@ const Search = (props) => {
                                   `${data.main.humidity}%`,
                                   data.weather[0].main,
                                 ],
+                                date: iterDate.replace(/-/gi, ""),
                               });
                               castObj[iterDate] = dateArr;
                             } else {
@@ -259,6 +260,7 @@ const Search = (props) => {
                                     `${data.main.humidity}%`,
                                     data.weather[0].main,
                                   ],
+                                  date: iterDate.replace(/-/gi, ""),
                                 },
                               ];
                             }

@@ -24,11 +24,12 @@ function App() {
   // state to hold five day forecast
   const [fivedaycast, setFiveDayCast] = useState({});
 
-  useEffect(() => {
-    let forecastRef = db.collection("forecast").doc("forecast");
-    let historyRef = db.collection("history").doc("history");
-    let selectedRef = db.collection("selected").doc("selected");
+  // firebase refs
+  const historyRef = db.collection("history").doc("history");
+  const selectedRef = db.collection("selected").doc("selected");
+  const forecastRef = db.collection("forecast").doc("forecast");
 
+  useEffect(() => {
     historyRef
       .get()
       .then((doc) => {
@@ -65,8 +66,30 @@ function App() {
         if (!doc.exists) {
           console.log("No such document!");
         } else {
-          console.log("Forecast data:", doc.data());
-          setFiveDayCast(doc.data());
+          // doc.data() isn't coming back sorted, so here is the sorting
+          var data = doc.data();
+          let forecastArray = [];
+
+          for (let x in data) {
+            forecastArray.push({ [x]: data[x] });
+          }
+          let sortedCast = forecastArray.sort((c1, c2) => {
+            if (
+              c1[Object.keys(c1)][0]["date"] < c2[Object.keys(c2)][0]["date"]
+            ) {
+              return -1;
+            } else {
+              return 1;
+            }
+          });
+
+          let castObj = {};
+
+          sortedCast.forEach((date) => {
+            castObj[Object.keys(date)] = date[Object.keys(date)];
+          });
+
+          setFiveDayCast(castObj);
         }
       })
       .catch((err) => {
